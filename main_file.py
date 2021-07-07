@@ -46,6 +46,8 @@ from flask import jsonify, make_response, request
 
 #      4. TRAINING
 
+model.fit()
+
 
 
 # ====================================== #
