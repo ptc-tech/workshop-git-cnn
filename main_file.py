@@ -51,7 +51,7 @@ model = keras.Sequential(
     ]
 )
 
-model.compile(optimizer="Adam", loss="mse", metrics=["mae", "acc"])
+model.compile(optimizer="Adam", loss="mse", metrics=["acc"])
 
 # ====================================== #
 
