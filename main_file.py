@@ -47,6 +47,7 @@ model = tf.keras.Sequential(
      layers.MaxPooling2D(pool_size=(2, 2)),
      layers.Flatten(),
      layers.Dropout(0.5),
+     layers.Dense(10, activation='softmax')
     ]
 )
 
