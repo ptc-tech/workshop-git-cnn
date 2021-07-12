@@ -26,6 +26,7 @@ from flask import jsonify, make_response, request
 (images_train, labels_train), (images_test, labels_test) = keras.datasets.mnist.load_data()
 
 
+test = 3
 # ====================================== #
 
 #      2. VISUALISATION DES INPUTS
