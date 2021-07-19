@@ -3,7 +3,6 @@
 # --- Manipulation de données
 import numpy as np
 import pandas as pd
-import random
 
 # --- Display
 from IPython.display import Image
@@ -51,7 +50,7 @@ batch_size = 64
 nb_epochs = 15
 validation_split = 0.2
 
-history = model.fit(X_train, Y_train, batch_size=batch_size, epochs=nb_epochs, validation_split= validation_split)
+history = model.fit(images_train, labels_train, batch_size=batch_size, epochs=nb_epochs, validation_split= validation_split)
 
 
 # ====================================== #
