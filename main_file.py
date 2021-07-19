@@ -46,8 +46,8 @@ from flask import jsonify, make_response, request
 
 #      4. TRAINING
 
-batch_size = 64
-nb_epochs = 15
+batch_size = parameters["batch_size"]
+nb_epochs = parameters["epochs"]
 validation_split = 0.2
 
 history = model.fit(images_train, labels_train, batch_size=batch_size, epochs=nb_epochs, validation_split= validation_split)
