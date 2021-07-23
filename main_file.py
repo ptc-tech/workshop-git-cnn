@@ -38,7 +38,20 @@ from flask import jsonify, make_response, request
 
 #      1. CREATION DU MODELE CNN
 
+model = keras.Sequential(
+    [
+     keras.Input(shape=(32, 32, 3)),
+     layers.Conv2D(32, kernel_size=(3, 3), activation="relu"),
+     layers.MaxPooling2D(pool_size=(2, 2)),
+     layers.Conv2D(64, kernel_size=(3, 3), activation="relu"),
+     layers.MaxPooling2D(pool_size=(2, 2)),
+     layers.Flatten(),
+     layers.Dropout(0.5),
+     layers.Dense(10, activation='softmax')
+    ]
+)
 
+model.compile(optimizer="Adam", loss="mse", metrics=["acc"])
 
 # ====================================== #
 
@@ -46,6 +59,11 @@ from flask import jsonify, make_response, request
 
 #      4. TRAINING
 
+batch_size = parameters["batch_size"]
+nb_epochs = parameters["epochs"]
+validation_split = 0.2
+
+history = model.fit(images_train, labels_train, batch_size=batch_size, epochs=nb_epochs, validation_split= validation_split)
 
 
 # ====================================== #
