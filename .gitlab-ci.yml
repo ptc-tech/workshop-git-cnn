@@ -62,11 +62,6 @@ cml:
   script:
     - pip3 install -r requirements.txt
     - python train_model.py
-
-
-test_model:
-  stage: test
-  script:
     - python test_images_train.py
 
 
