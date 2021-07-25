@@ -15,7 +15,8 @@
 
 stages:          # List of stages for jobs, and their order of execution
   - test
-  - cml_run
+  - model_train
+  - model_validation
   - deploy
 
 # Official language image. Look for the different tagged releases at:
@@ -42,26 +43,21 @@ before_script:
   - pip install virtualenv
   - virtualenv venv
   - source venv/bin/activate
-  - pip install -r requirements.txt
+  - pip3 install -r requirements.txt
 
 test:
   stage: test
   script:
     - python test_format.py
 
-lint-test-job:   # This job also runs in the test stage.
-  stage: test    # It can run at the same time as unit-test-job (in parallel).
+train:
+  stage: model_train
   script:
-    - echo "Linting code... This will take about 10 seconds."
-    - sleep 10
-    - echo "No lint issues found."
-
-cml:
-  stage: cml_run
-
-  script:
-    - pip3 install -r requirements.txt
     - python train_model.py
+
+modval:
+  stage: model_validation
+  script:
     - python test_images_train.py
 
 
