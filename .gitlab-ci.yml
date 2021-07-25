@@ -15,6 +15,7 @@
 
 stages:          # List of stages for jobs, and their order of execution
   - test
+  - cml_run
   - deploy
 
 # Official language image. Look for the different tagged releases at:
@@ -54,6 +55,20 @@ lint-test-job:   # This job also runs in the test stage.
     - echo "Linting code... This will take about 10 seconds."
     - sleep 10
     - echo "No lint issues found."
+
+cml:
+  stage: cml_run
+
+  script:
+    - pip3 install -r requirements.txt
+    - python train_model.py
+
+
+test_model:
+  stage: test
+  script:
+    - python test_images_train.py
+
 
 deploy-job:      # This job runs in the deploy stage.
   stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.

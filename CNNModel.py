@@ -2,11 +2,12 @@
 # @Author: Benjamin Cohen-Lhyver
 # @Date:   2021-07-21 10:45:04
 # @Last Modified by:   Benjamin Cohen-Lhyver
-# @Last Modified time: 2021-07-24 08:44:36
+# @Last Modified time: 2021-07-25 08:30:20
 
 
 ##############################################################################
 import json
+import pickle
 
 # --- Manipulation de données
 import numpy as np
@@ -42,11 +43,26 @@ class CNNModel():
         with open("./parameters.json") as f:
             self.parameters = json.load(f)
 
+        self.model_trained = False
+
 
     def import_data(self):
         # --- Import des données
         (self.images_train, self.labels_train), (self.images_test, self.labels_test) = keras.datasets.mnist.load_data()
-        self.nb_images = len(images_train)
+
+        self.images_train = self.images_train.astype("float32") / 255
+        self.images_train = np.expand_dims(self.images_train, -1)
+
+        self.images_test = self.images_test.astype("float32") / 255
+        self.images_test = np.expand_dims(self.images_test, -1)
+
+        self.nb_images = len(self.images_train)
+        self.input_shape = (28, 28, 1)
+
+        num_classes = len(np.unique(self.labels_train))
+
+        self.labels_train = keras.utils.to_categorical(self.labels_train, num_classes)
+        self.labels_test = keras.utils.to_categorical(self.labels_test, num_classes)
 
     # -------
     def test_parameters_format(self):
@@ -67,6 +83,16 @@ class CNNModel():
                     return 0
 
         return 1
+
+
+    def test_training_performance(self, thr=0.9):
+        """..."""
+        if self.model_trained:
+            if self.model.history.history[-1] > thr:
+                return 1
+
+        return 0
+
 
     # ====================================== #
 
@@ -95,20 +121,25 @@ class CNNModel():
     #      1. CREATION DU MODELE CNN
 
     def create_model(self):
+        """..."""
         self.model = keras.Sequential(
             [
-             keras.Input(shape=(32, 32, 3)),
+             layers.Input(shape=self.input_shape),
              layers.Conv2D(32, kernel_size=(3, 3), activation="relu"),
              layers.MaxPooling2D(pool_size=(2, 2)),
              layers.Conv2D(64, kernel_size=(3, 3), activation="relu"),
              layers.MaxPooling2D(pool_size=(2, 2)),
              layers.Flatten(),
-             layers.Dropout(0.5),
+             layers.Dropout(self.parameters["last_dropout"]),
              layers.Dense(10, activation='softmax')
             ]
         )
 
-        self.model.compile(optimizer="Adam", loss="mse", metrics=["acc"])
+        self.model.compile(
+            optimizer="adam",
+            loss="categorical_crossentropy",
+            metrics=["accuracy"]
+        )
 
     # ====================================== #
 
@@ -119,7 +150,7 @@ class CNNModel():
     def train_model(self):
         """..."""
         batch_size = self.parameters["batch_size"]
-        nb_epochs = self.parameters["epochs"]
+        nb_epochs = self.parameters["nb_epochs"]
         validation_split = self.parameters["validation_split"]
 
         self.history = self.model.fit(
@@ -129,6 +160,12 @@ class CNNModel():
             epochs=nb_epochs,
             validation_split=validation_split)
 
+
+    def save_history(self):
+        """..."""
+
+        with open("training_history.pkl", "wb") as outfile:
+            pickle.dump(self.model.history.history, outfile)
 
     # ====================================== #
 
