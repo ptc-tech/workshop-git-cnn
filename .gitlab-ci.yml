@@ -45,12 +45,13 @@ before_script:
   - source venv/bin/activate
   - pip3 install -r requirements.txt
 
-test:
+test-job:
   stage: test
   script:
     - python test_parameters_format.py
 
-train:
+
+train-job:
   stage: model_train
   script:
     - python train_model.py -e 4
@@ -58,7 +59,7 @@ train:
     paths:
       - training_history.pkl
 
-modval:
+modval-job:
   stage: model_validation
   needs:
     - job: train
