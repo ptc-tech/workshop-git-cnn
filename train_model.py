@@ -2,7 +2,7 @@
 # @Author: Benjamin Cohen-Lhyver
 # @Date:   2021-07-24 16:15:34
 # @Last Modified by:   Benjamin Cohen-Lhyver
-# @Last Modified time: 2021-07-25 19:15:42
+# @Last Modified time: 2021-07-25 19:28:34
 
 
 ##############################################################################
@@ -33,7 +33,7 @@ if args.epochs != 0:
 
     parameters["nb_epochs"] = args.epochs
 
-    with open("parameters.json") as params_file:
+    with open("parameters.json", "w", encoding="utf-8") as params_file:
         json.dump(parameters, params_file)
 ##############################################################################
 
