@@ -55,7 +55,8 @@ train:
   script:
     - python train_model.py -e 4
   artifacts:
-    paths: training_history.pkl
+    paths:
+      - training_history.pkl
 
 modval:
   stage: model_validation
