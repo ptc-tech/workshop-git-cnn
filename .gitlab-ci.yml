@@ -48,7 +48,6 @@ before_script:
 test:
   stage: test
   script:
-    #- python test_format.py
     - python test_parameters_format.py
 
 train:
@@ -56,10 +55,13 @@ train:
   script:
     - python train_model.py -e 4
   artifacts:
-    name: training_history.pkl
+    paths: training_history.pkl
 
 modval:
   stage: model_validation
+  needs:
+    - job: train
+      artifacts: true
   script:
     - python test_images_train.py
 
