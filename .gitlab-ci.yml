@@ -48,7 +48,8 @@ before_script:
 test:
   stage: test
   script:
-    - python test_format.py
+    #- python test_format.py
+    - python test_parameters_format.py
 
 train:
   stage: model_train
