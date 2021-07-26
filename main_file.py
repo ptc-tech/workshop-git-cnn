@@ -83,7 +83,8 @@ history = model.fit(images_train, labels_train, batch_size=batch_size, epochs=nb
 
 
 # ====================================== #
-
+test_loss, test_acc = model.evaluate(images_test, labels_test, verbose=2)
+predictions = model.predict(images_test)
 # ====================================== #
 
 #      6. API
