@@ -53,7 +53,7 @@ test:
 train:
   stage: model_train
   script:
-    - python train_model.py
+    - python train_model.py -e 4
 
 modval:
   stage: model_validation
