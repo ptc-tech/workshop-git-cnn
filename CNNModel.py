@@ -2,7 +2,7 @@
 # @Author: Benjamin Cohen-Lhyver
 # @Date:   2021-07-21 10:45:04
 # @Last Modified by:   Benjamin Cohen-Lhyver
-# @Last Modified time: 2021-07-25 08:30:20
+# @Last Modified time: 2021-07-26 06:26:14
 
 
 ##############################################################################
@@ -65,24 +65,24 @@ class CNNModel():
         self.labels_test = keras.utils.to_categorical(self.labels_test, num_classes)
 
     # -------
-    def test_parameters_format(self):
-        """..."""
+    # def test_parameters_format(self):
+    #     """..."""
 
-        for iParam, iValue in self.parameters.items():
+    #     for iParam, iValue in self.parameters.items():
 
-            if iParam not in ["activation_function"]:
+    #         if iParam not in ["activation_function"]:
 
-                if type(iValue) not in [int, float]:
-                    print(f"Error, parameter {iParam} with value {iValue} is not in the right format")
-                    return 0
+    #             if type(iValue) not in [int, float]:
+    #                 print(f"Error, parameter {iParam} with value {iValue} is not in the right format")
+    #                 return 0
 
-            else:
+    #         else:
 
-                if type(iValue) is not str:
-                    print(f"Error, parameter {iParam} with value {iValue} is not in the right format")
-                    return 0
+    #             if type(iValue) is not str:
+    #                 print(f"Error, parameter {iParam} with value {iValue} is not in the right format")
+    #                 return 0
 
-        return 1
+    #     return 1
 
 
     def test_training_performance(self, thr=0.9):
