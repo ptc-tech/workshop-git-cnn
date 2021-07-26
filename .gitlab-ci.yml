@@ -62,7 +62,7 @@ train-job:
 modval-job:
   stage: model_validation
   needs:
-    - job: train
+    - job: train-job
       artifacts: true
   script:
     - python test_images_train.py
