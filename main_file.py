@@ -69,6 +69,7 @@ def train_model():
         nb_epochs = parameters["epochs"]
         validation_split = 0.2
 
+
         history = model.fit(images_train, labels_train, batch_size=batch_size, epochs=nb_epochs, validation_split= validation_split)
 
 
@@ -95,7 +96,8 @@ def predict(image):
 # part of the prediction
 
 # ====================================== #
-
+test_loss, test_acc = model.evaluate(images_test, labels_test, verbose=2)
+predictions = model.predict(images_test)
 # ====================================== #
 
 #      6. API
